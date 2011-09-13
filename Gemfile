@@ -1,5 +1,4 @@
 source :gemcutter
-source :rubyforge
 source "http://gems.github.com/"
 
 gem "rake", "~>0.8.7"
@@ -11,12 +10,13 @@ gem "sanitize", "~>1.2.1"
 gem "rack", "1.1.0"
 gem "will_paginate", "~> 2.3.15"
 gem "has_many_polymorphs", "~> 2.13"
+gem "acts_as_list", "~>0.1.4"
 gem "aasm", "2.2.0"
 gem "actionwebservice", :git => "git://github.com/dejan/actionwebservice.git"
 gem "rubycas-client"
 gem "ruby-openid", :require => "openid"
 gem "sqlite3"
-
+gem 'bcrypt-ruby', '~> 2.1.4'
 
 gem "webrat", ">=0.7.0", :groups => [:cucumber, :test]
 gem "database_cleaner", ">=0.5.0", :groups => [:cucumber, :selenium]
@@ -29,6 +29,7 @@ group :test do
   gem "hoe"
   gem "rspec-rails", "~>1.3.3"
   gem "thoughtbot-factory_girl"
+  gem 'memory_test_fix', '~>0.1.3'
 end
 
 group :selenium do
