@@ -74,7 +74,7 @@ class TodosController < ApplicationController
         project = current_user.projects.find_or_create_by_name(p.project_name)
         @new_project_created = project.new_record_before_save?
         @todo.project_id = project.id
-      elsif !p.project_id.nil?
+      elsif !(p.project_id.nil? || p.project_id.blank?)
         project = current_user.projects.find_by_id(p.project_id)
         @todo.errors.add(:project, "unknown") if project.nil?
       end
@@ -84,7 +84,7 @@ class TodosController < ApplicationController
         @new_context_created = context.new_record_before_save?
         @not_done_todos = [@todo] if @new_context_created
         @todo.context_id = context.id
-      elsif !p.context_id.nil?
+      elsif !(p.context_id.nil? || p.context_id.blank?)
         context = current_user.contexts.find_by_id(p.context_id)
         @todo.errors.add(:context, "unknown") if context.nil?
       end
@@ -174,7 +174,10 @@ class TodosController < ApplicationController
 
     tag_list = params[:tag_list]
 
+    @sequential = !params[:todos_sequential].blank? && params[:todos_sequential]=='true'
+
     @todos = []
+    @predecessor = nil
     params[:todo][:multiple_todos].split("\n").map do |line|
       unless line.blank?
         @todo = current_user.todos.build(
@@ -182,12 +185,20 @@ class TodosController < ApplicationController
         @todo.project_id = @project_id
         @todo.context_id = @context_id
         @saved = @todo.save
+
+        if @predecessor && @saved && @sequential
+          @todo.add_predecessor(@predecessor)
+          @todo.block!
+        end
+
         unless (@saved == false) || tag_list.blank?
           @todo.tag_with(tag_list)
           @todo.tags.reload
         end
+
         @todos << @todo
         @not_done_todos << @todo if @new_context_created
+        @predecessor = @todo
       end
     end
 
