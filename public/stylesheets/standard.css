@@ -10,6 +10,9 @@ html body.projects div#content.projects div#input_box div#todo_new_action_contai
 
 input#project_name.project-name, input#project_default_context_name.ui-autocomplete-input, textarea#project_description.project-description, input#project_default_tags.ui-autocomplete-input {
     width:100%;
+
+.widgets a.reviewed, button.reviewed{
+    float:right;
 }
 
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
