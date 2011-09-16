@@ -12,6 +12,10 @@ input#project_name.project-name, input#project_default_context_name.ui-autocompl
     width:100%;
 }
 
+.needsreview {
+    background: #ffC;
+}
+
 .widgets a.reviewed, button.reviewed{
     float:right;
 }

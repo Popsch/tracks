@@ -52,16 +52,9 @@ class ProjectsController < ApplicationController
   end
 
   def set_reviewed
-    template = 'projects/update.js.erb'
-
-    #@source_view = 'project'
     @project = current_user.projects.find(params[:id])
-
-    @project.todos.each do |todo|
-      todo.created_at = Time.now
-      todo.save
-    end
-   
+    @project.last_reviewed = Time.now
+    @project.save
     redirect_to :action => 'show'
   end
 

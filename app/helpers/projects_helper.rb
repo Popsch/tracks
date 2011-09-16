@@ -67,4 +67,14 @@ module ProjectsHelper
     project_description
   end
 
+  def needsreview_class(item)
+    ### FIXME: need to check to do this with active projects only
+    if item.last_reviewed < current_user.time - (prefs.review_period).days
+      return "needsreview"
+    else
+      return "needsnoreview"
+    end
+  end
+
+
 end
