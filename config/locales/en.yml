@@ -422,6 +422,7 @@ en:
       due_tomorrow: Due Tomorrow
     completed_last_x_days: Completed in the last %{count} days
     no_actions_with: Currently there are no incomplete actions with the tag '%{tag_name}'
+    move_to_context: Make context %{newcontext}
     defer_x_days:
       one: Defer one day
       other: Defer %{count} days

@@ -1,5 +1,32 @@
 module TodosHelper
 
+  def remote_quickedit_menu(todo=@todo,newcontext=@newcontext)
+    return "<li>"+remote_quickedit_menu_entry(todo,"computer")+"</li>" +
+      "<li>"+remote_quickedit_menu_entry(todo,"@inbox")+"</li>"
+  end
+
+#          <li><%= remote_delete_menu_item(todo) %></li>
+#          <% unless todo.completed? || todo.deferred? -%>
+#            <li><%= remote_defer_menu_item(1, todo) %></li>
+#            <li><%= remote_defer_menu_item(7, todo) %></li>
+#            <li><%= remote_promote_to_project_menu_item(todo) %></li>
+#          <% end -%>
+
+  def remote_quickedit_menu_entry(todo=@todo,newcontext=@newcontext)
+    url = {:controller => 'todos', :action => 'quickedit', :id => todo.id, :newcontext=>newcontext}
+
+    options = {:class => "icon_quickedit_item", :id => "quickedit_#{newcontext}_#{dom_id(todo)}" }
+
+    return link_to(image_tag_for_quickaction_move(newcontext), url, options)
+#    link_to(
+#      image_tag("icon_wand.png", :alt => t('todos.quickedit'), :align => "absmiddle", :id => 'quickedit_icon_todo_'+todo.id.to_s, :class => 'quickedit_item'),
+#      {:controller => 'todos', :action => 'quickedit', :id => todo.id, :newcontext => newcontext},
+#      :class => "icon quickedit_item",
+#      :id => "icon_quickedit_todo_#{todo.id}",
+#      :title => t('todos.quickedit_action_with_description', :description => todo.description))
+  end
+
+
   def remote_star_icon(todo=@todo)
     link_to( image_tag_for_star(todo),
       toggle_star_todo_path(todo),
@@ -57,6 +84,11 @@ module TodosHelper
 
     return link_to(image_tag("to_project_off.png", :align => "absmiddle")+" " + t('todos.convert_to_project'), url, {:id => "to_project_#{dom_id(todo)}"})
   end
+
+  def image_tag_for_quickaction_move(newcontext)
+    image_tag("rightarrow.gif", :mouseover => "rightarrow.gif", :alt => t('todos.move_to_context', :newcontext => newcontext), :align => "absmiddle")+" "+t('todos.move_to_context', :newcontext => newcontext)
+  end
+
 
   def image_tag_for_defer(days)
     image_tag("defer_#{days}_off.png", :mouseover => "defer_#{days}.png", :alt => t('todos.defer_x_days', :count => days), :align => "absmiddle")+" "+t('todos.defer_x_days', :count => days)
@@ -440,5 +472,6 @@ module TodosHelper
   def image_tag_for_star(todo)
     image_tag("blank.png", :title =>t('todos.star_action'), :class => "todo_star"+(todo.starred? ? " starred":""), :id => "star_img_"+todo.id.to_s)
   end
+
 
 end

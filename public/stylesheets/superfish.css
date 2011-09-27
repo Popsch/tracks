@@ -19,6 +19,12 @@
     z-index: 99;
 }
 
+.sf-item-menu.quickactions ul {
+    width: 19.5em;
+    z-index: 99;
+}
+
+
 .sf-menu ul li {
 	width:			100%;
 }

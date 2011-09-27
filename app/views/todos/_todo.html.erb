@@ -23,6 +23,13 @@ parameters += "&_tag_name=#{@tag_name}" if @source_view == 'tag'
         </ul>
       </li>
     </ul>
+    <ul class="sf-menu sf-item-menu quickactions">
+      <li style="z-index:<%=@z_index_counter%>"><%= image_tag "icon_wand.png", :alt=> "" %>
+        <ul id="ul<%= dom_id(todo) %>">
+	  <%= remote_quickedit_menu (todo) %>
+        </ul>
+      </li>
+    </ul>
     <%= grip_span(todo) %>
     <div class="description<%= staleness_class( todo ) %>">
       <%= date_span(todo) -%>
