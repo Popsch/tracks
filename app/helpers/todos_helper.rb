@@ -2,10 +2,13 @@ module TodosHelper
 
   def remote_quickedit_menu(todo=@todo,newcontext=@newcontext)
 
-    contexts = current_user.contexts.find_by_in_quickaction(0)
-    debugger
-    return "<li>"+remote_quickedit_menu_entry(todo,"computer")+"</li>" +
-      "<li>"+remote_quickedit_menu_entry(todo,"@inbox")+"</li>"
+    contexts = current_user.contexts.find_all_by_in_quickaction(1)
+    code = ""
+    contexts.each do |c|  code=code+"<li>"+remote_quickedit_menu_entry(todo,c.name)+"</li>" end
+
+    return code
+#    return "<li>"+remote_quickedit_menu_entry(todo,"computer")+"</li>" +
+#      "<li>"+remote_quickedit_menu_entry(todo,"@inbox")+"</li>"
   end
 
 #          <li><%= remote_delete_menu_item(todo) %></li>
